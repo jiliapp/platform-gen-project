@@ -130,10 +130,10 @@
                                 <name>org.jooq.meta.mysql.MySQLDatabase</name>
                                 <!--include和exclude用于控制为数据库中哪些表生成代码(order)|(merchant)-->
                                 <includes>.*</includes>
-                                <excludes>QRTZ_.*|flyway_schema_history</excludes>
+                                <!--<excludes>QRTZ_.*|flyway_schema_history</excludes>-->
                                 <!--schema名称-->
                                 <inputSchema>oauth2db</inputSchema>
-                                <outputSchema>oauth2</outputSchema>
+                                <outputSchema>oauth2db</outputSchema>
                                 <forcedTypes>
                                     <forcedType>
                                         <name>BIGINT</name>
@@ -143,8 +143,8 @@
                             </database>
                             <target>
                                 <!--生成代码文件的包名及放置目录-->
-                                <packageName>cn.jiliapp.vending.jooq</packageName>
-                                <directory>..\product-oauth2-project\product-oauth2-dao\src\main\java</directory>
+                                <packageName>cn.jiliapp.sas.jooq</packageName>
+                                <directory>..\platform-oauth2-project\platform-oauth2-dao\src\main\java</directory>
                                 <encoding>UTF-8</encoding>
                                 <locale>zh</locale>
                                 <clean>true</clean>
