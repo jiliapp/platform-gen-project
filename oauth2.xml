@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.jiliapp</groupId>
+    <groupId>cn.jiliapp.parent</groupId>
     <artifactId>platform-gen-project</artifactId>
-    <version>2.0.11.oauth2</version>
+    <version>6.0.11.oauth2</version>
 
     <properties>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
@@ -14,9 +14,10 @@
 
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <jooq.version>3.15.4</jooq.version>
-        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+        <jooq.version>3.16.6</jooq.version>
+        <spring-boot.version>2.6.4</spring-boot.version>
         <maven.compiler.version>3.8.1</maven.compiler.version>
+        <pg.version>42.3.3</pg.version>
     </properties>
 
     <dependencies>
@@ -94,9 +95,10 @@
                         </dependency>
 
                         <dependency>
-                            <groupId>mysql</groupId>
-                            <artifactId>mysql-connector-java</artifactId>
-                            <version>8.0.25</version>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <version>${pg.version}</version>
+                            <scope>runtime</scope>
                         </dependency>
 
                     </dependencies>
@@ -111,14 +113,16 @@
                     <configuration>
                         <jdbc>
                             <!--suppress UnresolvedMavenProperty -->
-                            <url>jdbc:mysql://localhost:3306/oauth2db?allowPublicKeyRetrieval=true&amp;serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false</url>
+                            <url>jdbc:postgresql://127.0.0.1:5432/db2?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;useSSL=false&amp;serverTimezone=GMT%2b8</url>
                             <!--suppress UnresolvedMavenProperty -->
-                            <user>root</user>
+                            <user>postgres</user>
                             <!--suppress UnresolvedMavenProperty -->
                             <password>DEpn1Y9gM3ys2v6g</password>
                             <!--suppress UnresolvedMavenProperty -->
-                            <driver>com.mysql.cj.jdbc.Driver</driver>
+                            <driver>org.postgresql.Driver</driver>
                         </jdbc>
+
+
                         <generator>
                             <!-- 代码生成器 -->
                             <!--<name>org.jooq.codegen.JavaGenerator</name>-->
@@ -127,24 +131,38 @@
                                 <name>cn.jiliapp.generator.jooq.PlatformStrategy</name>
                             </strategy>
                             <database>
-                                <name>org.jooq.meta.mysql.MySQLDatabase</name>
-                                <!--include和exclude用于控制为数据库中哪些表生成代码(order)|(merchant)-->
-                                <includes>.*</includes>
+
+                                <name>org.jooq.meta.postgres.PostgresDatabase</name>
                                 <!--<excludes>QRTZ_.*|flyway_schema_history</excludes>-->
                                 <!--schema名称-->
-                                <inputSchema>oauth2db</inputSchema>
-                                <outputSchema>oauth2db</outputSchema>
+                                <!--<inputCatalog>public</inputCatalog>-->
+                                <inputSchema>public</inputSchema>
+                                <!--                                <outputSchema>oauth2db</outputSchema>-->
+                                <!--include和exclude用于控制为数据库中哪些表生成代码(order)|(merchant)-->
+                                <includes>.*</includes>
                                 <forcedTypes>
-                                    <forcedType>
-                                        <name>BIGINT</name>
-                                        <includeExpression>ID</includeExpression>
-                                    </forcedType>
+<!--                                    <forcedType>-->
+<!--                                        <name>BIGINT</name>-->
+<!--                                        <includeExpression>ID</includeExpression>-->
+<!--                                    </forcedType>-->
                                 </forcedTypes>
+                                <comments>
+                                    <comment>
+                                        <!-- Regular expression matching all objects that have this comment. -->
+                                        <!-- Whether the comment is a deprecation notice. Defaults to false. -->
+                                        <deprecated>false</deprecated>
+                                        <!-- Whether the original schema comment should be included. Defaults to true. -->
+                                        <includeSchemaComment>true</includeSchemaComment>
+                                        <!-- The actual comment text. Defaults to no message. -->
+                                        <message>The actual comment text.</message>
+                                    </comment>
+                                </comments>
                             </database>
+
                             <target>
                                 <!--生成代码文件的包名及放置目录-->
-                                <packageName>cn.jiliapp.sas.jooq</packageName>
-                                <directory>..\platform-oauth2-project\platform-oauth2-dao\src\main\java</directory>
+                                <packageName>cn.jiliapp.user.dao.jooq</packageName>
+                                <directory>..\platform-cloud-micronaut\user\src\main\java</directory>
                                 <encoding>UTF-8</encoding>
                                 <locale>zh</locale>
                                 <clean>true</clean>
@@ -155,7 +173,7 @@
                                 <pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>
                                 <daos>true</daos>
                                 <interfaces>true</interfaces>
-                                <springAnnotations>true</springAnnotations>
+                                <springAnnotations>false</springAnnotations>
                                 <validationAnnotations>true</validationAnnotations>
                                 <fluentSetters>true</fluentSetters>
                                 <javaTimeTypes>true</javaTimeTypes>

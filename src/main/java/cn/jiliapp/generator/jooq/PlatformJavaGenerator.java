@@ -26,12 +26,13 @@ public class PlatformJavaGenerator  extends JavaGenerator {
         File file = getFile(table, GeneratorStrategy.Mode.DAO);
         if (file.exists()) {
             try {
-                String fileContent = new String(FileCopyUtils.copyToByteArray(file));
+                //此处更新编码格式，防止中文编码错误
+                String fileContent = new String(FileCopyUtils.copyToByteArray(file),"utf-8");
                 String oldExtends = " extends DAOImpl";
                 String newExtends = " extends AbstractDAOExtendImpl";
                 fileContent = fileContent.replace("import org.jooq.impl.DAOImpl;\n", "");
                 fileContent = fileContent.replace(oldExtends, newExtends);
-                FileCopyUtils.copy(fileContent.getBytes(), file);
+                FileCopyUtils.copy(fileContent.getBytes("utf-8"), file);
             } catch (IOException e) {
                 log.error("generateDao error: {}", file.getAbsolutePath(), e);
             }
@@ -40,10 +41,11 @@ public class PlatformJavaGenerator  extends JavaGenerator {
 
     @Override
     protected void generateDao(TableDefinition table, JavaWriter out) {
-        // 用于生成 import com.diamondfsd.jooq.learn.extend.AbstractDAOExtendImpl 内容
+        log.debug("generateDao ----------out--------------------");
         out.ref("cn.jiliapp.parent.jooq.extend.AbstractDAOExtendImpl");
         super.generateDao(table, out);
     }
+
 
 
 
