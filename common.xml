@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.jiliapp.parent</groupId>
+    <artifactId>platform-gen-project</artifactId>
+    <version>6.0.11.common</version>
+
+    <properties>
+        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <jooq.version>3.16.6</jooq.version>
+        <spring-boot.version>2.6.4</spring-boot.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <pg.version>42.3.3</pg.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
+            <version>${spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-codegen</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+
+        <!--防止jooq编译错误-->
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${jooq.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.version}</version>
+                    <configuration>
+                        <fork>true</fork>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <!-- jooq的插件配置 -->
+                <plugin>
+                    <groupId>org.jooq</groupId>
+                    <artifactId>jooq-codegen-maven</artifactId>
+                    <version>${jooq.version}</version>
+
+                    <dependencies>
+
+                        <dependency>
+                            <groupId>org.jooq</groupId>
+                            <artifactId>jooq-meta</artifactId>
+                            <version>${jooq.version}</version>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.jooq</groupId>
+                            <artifactId>jooq-codegen</artifactId>
+                            <version>${jooq.version}</version>
+                        </dependency>
+
+                        <!--防止jooq编译错误-->
+                        <dependency>
+                            <groupId>org.jooq</groupId>
+                            <artifactId>jooq</artifactId>
+                            <version>${jooq.version}</version>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <version>${pg.version}</version>
+                            <scope>runtime</scope>
+                        </dependency>
+
+                    </dependencies>
+
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <jdbc>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <url>jdbc:postgresql://127.0.0.1:5432/db2?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true&amp;useSSL=false&amp;serverTimezone=GMT%2b8</url>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <user>postgres</user>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <password>DEpn1Y9gM3ys2v6g</password>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <driver>org.postgresql.Driver</driver>
+                        </jdbc>
+
+
+                        <generator>
+                            <!-- 代码生成器 -->
+                            <!--<name>org.jooq.codegen.JavaGenerator</name>-->
+                            <name>cn.jiliapp.generator.jooq.PlatformJavaGenerator</name>
+                            <strategy>
+                                <name>cn.jiliapp.generator.jooq.PlatformStrategy</name>
+                            </strategy>
+                            <database>
+
+                                <name>org.jooq.meta.postgres.PostgresDatabase</name>
+                                <!--<excludes>QRTZ_.*|flyway_schema_history</excludes>-->
+                                <!--schema名称-->
+                                <!--<inputCatalog>public</inputCatalog>-->
+                                <inputSchema>common</inputSchema>
+                                <!--                                <outputSchema>oauth2db</outputSchema>-->
+                                <!--include和exclude用于控制为数据库中哪些表生成代码(order)|(merchant)-->
+                                <includes>.*</includes>
+                                <forcedTypes>
+<!--                                    <forcedType>-->
+<!--                                        <name>BIGINT</name>-->
+<!--                                        <includeExpression>ID</includeExpression>-->
+<!--                                    </forcedType>-->
+                                </forcedTypes>
+                                <comments>
+                                    <comment>
+                                        <!-- Regular expression matching all objects that have this comment. -->
+                                        <!-- Whether the comment is a deprecation notice. Defaults to false. -->
+                                        <deprecated>false</deprecated>
+                                        <!-- Whether the original schema comment should be included. Defaults to true. -->
+                                        <includeSchemaComment>true</includeSchemaComment>
+                                        <!-- The actual comment text. Defaults to no message. -->
+                                        <message>gen common schema</message>
+                                    </comment>
+                                </comments>
+                            </database>
+
+                            <target>
+                                <!--生成代码文件的包名及放置目录-->
+                                <packageName>cn.jiliapp.common.dao.jooq</packageName>
+                                <directory>..\platform-cloud-micronaut\common\src\main\java</directory>
+                                <encoding>UTF-8</encoding>
+                                <locale>zh</locale>
+                                <clean>true</clean>
+                            </target>
+                            <generate>
+                                <jpaAnnotations>false</jpaAnnotations>
+                                <pojos>true</pojos>
+                                <pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>
+                                <daos>true</daos>
+                                <interfaces>true</interfaces>
+                                <springAnnotations>false</springAnnotations>
+                                <validationAnnotations>true</validationAnnotations>
+                                <fluentSetters>true</fluentSetters>
+                                <javaTimeTypes>true</javaTimeTypes>
+                            </generate>
+                        </generator>
+                    </configuration>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
