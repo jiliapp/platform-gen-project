@@ -133,7 +133,7 @@
                             <database>
 
                                 <name>org.jooq.meta.postgres.PostgresDatabase</name>
-                                <!--<excludes>QRTZ_.*|flyway_schema_history</excludes>-->
+                                <excludes>QRTZ_.*|flyway_schema_history</excludes>
                                 <!--schema名称-->
                                 <!--<inputCatalog>public</inputCatalog>-->
                                 <inputSchema>common</inputSchema>
