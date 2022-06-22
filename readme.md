@@ -11,7 +11,7 @@ mvn -P jooq-codegen-meeting  org.jooq:jooq-codegen-maven:3.15.4:generate
 xml文件拆分
 mvn org.jooq:jooq-codegen-maven:3.15.4:generate -f oauth2.xml  
 
-mvn org.jooq:jooq-codegen-maven:3.16.6:generate -f oauth2.xml  
+mvn org.jooq:jooq-codegen-maven:3.16.6:generate -f user.xml  
 mvn org.jooq:jooq-codegen-maven:3.16.6:generate -f common.xml
 
 ````
