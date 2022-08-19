@@ -6,7 +6,7 @@
 
     <groupId>cn.jiliapp.parent</groupId>
     <artifactId>platform-gen-project</artifactId>
-    <version>6.0.11.user</version>
+    <version>6.0.11.ask</version>
 
     <properties>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
@@ -21,6 +21,8 @@
     </properties>
 
     <dependencies>
+
+
         <dependency>
             <groupId>org.jooq</groupId>
             <artifactId>jooq-meta</artifactId>
@@ -120,10 +122,10 @@
                             <database>
 
                                 <name>org.jooq.meta.postgres.PostgresDatabase</name>
-                                <excludes>QRTZ_.*</excludes>
+                                <excludes>QRTZ_.*|flyway_schema_history</excludes>
                                 <!--schema名称-->
                                 <!--<inputCatalog>public</inputCatalog>-->
-                                <inputSchema>user</inputSchema>
+                                <inputSchema>ask</inputSchema>
                                 <!--                                <outputSchema>oauth2db</outputSchema>-->
                                 <!--include和exclude用于控制为数据库中哪些表生成代码(order)|(merchant)-->
                                 <includes>.*</includes>
@@ -141,15 +143,15 @@
                                         <!-- Whether the original schema comment should be included. Defaults to true. -->
                                         <includeSchemaComment>true</includeSchemaComment>
                                         <!-- The actual comment text. Defaults to no message. -->
-                                        <message>gen user schema</message>
+                                        <message>gen ask schema</message>
                                     </comment>
                                 </comments>
                             </database>
 
                             <target>
                                 <!--生成代码文件的包名及放置目录-->
-                                <packageName>cn.jiliapp.user.dao.jooq</packageName>
-                                <directory>..\platform-cloud-micronaut\user\src\main\java</directory>
+                                <packageName>cn.jiliapp.ask.dao.jooq</packageName>
+                                <directory>..\platform-cloud-micronaut\ask\src\main\java</directory>
                                 <encoding>UTF-8</encoding>
                                 <locale>zh</locale>
                                 <clean>true</clean>
