@@ -15,5 +15,5 @@ mvn org.jooq:jooq-codegen-maven:3.16.6:generate -f user.xml
 mvn org.jooq:jooq-codegen-maven:3.16.6:generate -f common.xml
 mvn org.jooq:jooq-codegen-maven:3.16.6:generate -f product.xml
 mvn org.jooq:jooq-codegen-maven:3.16.6:generate -f payment.xml
-
+mvn org.jooq:jooq-codegen-maven:3.16.6:generate -f park.xml
 ````
