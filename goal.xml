@@ -6,7 +6,7 @@
 
     <groupId>cn.jiliapp.parent</groupId>
     <artifactId>platform-gen-project</artifactId>
-    <version>6.0.11.product</version>
+    <version>6.0.11.goal</version>
 
     <properties>
         <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
@@ -123,7 +123,7 @@
                                 <excludes>QRTZ_.*|flyway_schema_history</excludes>
                                 <!--schema名称-->
                                 <!--<inputCatalog>public</inputCatalog>-->
-                                <inputSchema>product</inputSchema>
+                                <inputSchema>goal</inputSchema>
                                 <!--                                <outputSchema>oauth2db</outputSchema>-->
                                 <!--include和exclude用于控制为数据库中哪些表生成代码(order)|(merchant)-->
                                 <includes>.*</includes>
@@ -148,8 +148,8 @@
 
                             <target>
                                 <!--生成代码文件的包名及放置目录-->
-                                <packageName>cn.jiliapp.product.dao.jooq</packageName>
-                                <directory>..\platform-cloud-micronaut\product\src\main\java</directory>
+                                <packageName>cn.jiliapp.goal.dao.jooq</packageName>
+                                <directory>..\platform-cloud-micronaut\goal\src\main\java</directory>
                                 <encoding>UTF-8</encoding>
                                 <locale>zh</locale>
                                 <clean>true</clean>
